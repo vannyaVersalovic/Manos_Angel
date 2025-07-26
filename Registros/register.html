@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registrarse - Manos de Angel Spa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="register.css" />
+</head>
+<body>
+  <header class="top-header">
+    <div class="logo">
+      <img src="../Imagenes/Logo.png" alt="Logo" class="logo-img" />
+      <span>Manos de Angel Spa</span>
+    </div>
+    <nav>
+      <a href="index.html">Iniciar Sesión</a>
+      <a href="register.html">Registrarse</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Crear Cuenta</h2>
+    <form id="form-register">
+  <input type="text" id="username" placeholder="Nombre de usuario" required />
+  <input type="date" id="birthdate" required />
+  <input type="email" id="email" placeholder="Correo electrónico" required />
+  <input type="password" id="password" placeholder="Contraseña" required />
+  <button type="submit">Registrarse</button>
+</form>
+
+    <div class="link-login">
+      ¿Ya tienes cuenta? <a href="index.html">Inicia sesión aquí</a>
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

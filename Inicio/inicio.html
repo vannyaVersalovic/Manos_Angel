@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manos de Angel Spa</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="top-header">
+  <div class="logo">
+    <img src="/Imagenes/Logo.png" alt="Logo " class="logo-img" />
+    <span>Manos de Angel Spa</span>
+  </div>
+  <nav>
+  <a href="/registros/index.html">Iniciar Sesión</a>
+  <a href="/registros/register.html">Registrarse</a>
+</nav>
+
+</header>
+  <main>
+    
+    <section class="ubicacion">
+  <h2>📍 Nuestra ubicación</h2>
+  <p>Yungay 745, Curicó, Chile</p>
+  <iframe
+    class="map"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3331.906433361188!2d-71.23863248481717!3d-34.98101218048525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x968f09a44b4a91f3%3A0x5cc06442f8478e5e!2sYungay%20745%2C%20Curic%C3%B3%2C%20Regi%C3%B3n%20del%20Maule%2C%20Chile!5e0!3m2!1ses!2scl!4v1688483739037!5m2!1ses!2scl"
+    width="600"
+    height="450"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</section>
+
+
+    <section class="servicios">
+      <h2>✨ Servicios</h2>
+      <div class="servicios-grid">
+        <div class="servicio">
+          <img src="/Imagenes/Manicurista.jpg" alt="Manicurista" />
+          <p>Manicurista</p>
+        </div>
+        <div class="servicio">
+          <img src="/Imagenes/Lashista.webp" alt="Lashistas" />
+          <p>Lashístas</p>
+        </div>
+        <div class="servicio">
+          <img src="/Imagenes/masajes.jpg" alt="Masajes" />
+          <p>Masajes</p>
+        </div>
+        <div class="servicio">
+          <img src="/Imagenes/Peluqueria.jpg" alt="Peluqueria" />
+          <p>Peluqueria</p>
+        </div>
+        <div class="servicio">
+          <img src="/Imagenes/Podologia.jpg" alt="Podología" />
+          <p>Podología</p>
+        </div>
+      </div>
+      <a href="/registros/index.html" class="btn-reservar">Reservar ahora</a>
+
+    </section>
+
+    <section class="opiniones">
+      <h2>📝 Opiniones de clientes</h2>
+      <p>Promedio</p>
+      <div id="promedio-estrellas">⭐️⭐️⭐️⭐️⭐️</div>
+      <p>(<span id="total-opiniones">0</span> opiniones)</p>
+      <div id="opiniones-publicas"></div>
+
+    </section>
+
+
+
+    <section class="redes">
+  <h2>✨ Síguenos</h2>
+  <div class="iconos-redes">
+    <a href="https://facebook.com/tucuenta" target="_blank" rel="noopener noreferrer">
+      <img src="/Imagenes/facebook.webp" alt="Facebook" class="icono-redes" />
+    </a>
+    <a href="https://instagram.com/tucuenta" target="_blank" rel="noopener noreferrer">
+      <img src="/Imagenes/Instagram.png" alt="Instagram" class="icono-redes" />
+    </a>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Manos de Angel Spa</p>
+  </footer>
+  
+
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // Inicialización de Firebase
+  if (!firebase.apps.length) {
+    const firebaseConfig = {
+      apiKey: "AIzaSyAWD49AKD5nftRxVnQZoqiPZWiUbYnev7M",
+      authDomain: "manos-de-angel-b0ce5.firebaseapp.com",
+      projectId: "manos-de-angel-b0ce5",
+      storageBucket: "manos-de-angel-b0ce5.firebasestorage.app",
+      messagingSenderId: "570701301886",
+      appId: "1:570701301886:web:f498b2768c612f77d0b02f",
+      measurementId: "G-0DNCN6475K"
+    };
+    firebase.initializeApp(firebaseConfig);
+  }
+</script>
+
+<!-- Después de la inicialización, cargar tu JS -->
+<script src="/inicio/inicio-publico.js"></script>
+
+
+
+
+
+</body>
+</html>

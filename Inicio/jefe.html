@@ -1,0 +1,379 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Jefa | Manos de Ángel Spa</title>
+
+  <!-- Hoja de estilos general -->
+  <link rel="stylesheet" href="/Inicio/style.css" />
+
+  <!-- O si quieres hoja solo para jefe -->
+  <!-- <link rel="stylesheet" href="/inicio/jefe.css" /> -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- ENCABEZADO SUPERIOR -->
+  <header class="dashboard-header d-flex justify-content-between align-items-center p-3 shadow-sm">
+  <div class="logo d-flex align-items-center">
+    <img src="/Imagenes/Logo.png" alt="Logo" style="height: 40px; margin-right: 10px;" />
+    <h1 style="font-size: 1.4rem; margin: 0;">Manos de Ángel Spa</h1>
+  </div>
+  <div class="acciones d-flex gap-3 align-items-center">
+    <button class="btn btn-light position-relative" title="Notificaciones">
+      🔔
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+    </button>
+    <button class="btn btn-light" title="Perfil">👩‍💼</button>
+    <button class="btn btn-outline-danger" id="cerrar-sesion">Cerrar sesión</button>
+  </div>
+</header>
+
+<section class="bienvenida">
+  <h2>🌸 Bienvenida, <span id="nombre-usuario"></span></h2>
+</section>
+
+
+  <main class="container my-4">
+    <!-- Aquí irán las demás secciones -->
+     <!-- FILTROS DE RESERVAS -->
+<section class="card p-4 mb-4 shadow-sm">
+  <h2 class="h5 mb-3">🔍 Filtros de Reservas</h2>
+  <form id="form-filtros" class="row g-3">
+    <!-- Fecha específica -->
+    <div class="col-md-3">
+      <label for="fecha" class="form-label">Fecha específica</label>
+      <input type="date" id="fecha" class="form-control" />
+    </div>
+
+    <!-- Rango de fechas -->
+    <div class="col-md-3">
+      <label for="desde" class="form-label">Desde</label>
+      <input type="date" id="desde" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+      <label for="hasta" class="form-label">Hasta</label>
+      <input type="date" id="hasta" class="form-control" />
+    </div>
+
+    <!-- Trabajadora -->
+    <div class="col-md-3">
+      <label for="filtro-trabajadora" class="form-label">Trabajadora</label>
+      <select id="filtro-trabajadora" class="form-select">
+        <option value="">Todas</option>
+        <!-- Aquí se llenará dinámicamente con JS -->
+      </select>
+    </div>
+
+    <!-- Tipo de servicio -->
+    <div class="col-md-3">
+      <label for="filtro-servicio" class="form-label">Tipo de Servicio</label>
+      <select id="filtro-servicio" class="form-select">
+        <option value="">Todos</option>
+        <option value="Manicurista">Manicurista</option>
+        <option value="Lashistas">Lashistas</option>
+        <option value="Masajes">Masajes</option>
+        <option value="Peluqueria">Peluqueria</option>
+        <option value="Podología">Podología</option>
+        <option value="Depilacion">Depilacion</option>
+      </select>
+    </div>
+
+    <!-- Tipo de pago -->
+    <div class="col-md-3">
+      <label for="filtro-pago" class="form-label">Tipo de Pago</label>
+      <select id="filtro-pago" class="form-select">
+        <option value="">Todos</option>
+        <option value="efectivo">Efectivo</option>
+        <option value="transferencia">Transferencia</option>
+      </select>
+    </div>
+
+    <!-- Botón de buscar -->
+    <div class="col-md-3 align-self-end">
+      <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+    </div>
+  </form>
+</section>
+
+<!-- LISTADO DE RESERVAS -->
+<section class="card p-4 mb-4 shadow-sm">
+  <h2 class="h5 mb-3">📋 Reservas Activas</h2>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle text-center">
+      <thead class="table-light">
+        <tr>
+          <th>Cliente</th>
+          <th>Trabajadora</th>
+          <th>Servicio</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Método de Pago</th>
+          <th>Estado</th>
+          <th>Pagado</th>
+          <th>Check-in</th>
+          <th>Ver</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-reservas">
+        <tr>
+          <td colspan="10">Cargando reservas...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+    <!-- RESUMEN DE VENTAS -->
+<section class="card p-4 mb-4 shadow-sm">
+  <h2 class="h5 mb-3">💰 Resumen de Ventas</h2>
+
+  <!-- Botones tipo pestaña -->
+  <div class="btn-group mb-3" role="group">
+    <button type="button" class="btn btn-outline-secondary active" id="tab-diario">Total Diario</button>
+    <button type="button" class="btn btn-outline-secondary" id="tab-semanal">Total Semanal</button>
+    <button type="button" class="btn btn-outline-secondary" id="tab-trabajadoras">Por Trabajadora</button>
+    <button type="button" class="btn btn-outline-secondary" id="tab-servicios">Por Servicio</button>
+  </div>
+
+  <!-- Contenido dinámico -->
+<div id="contenido-resumen-ventas" class="row g-3">
+
+  <!-- Total Diario -->
+  <div class="resumen-tab active" id="resumen-diario">
+    <div class="col-md-12">
+      <div class="card text-white bg-success shadow">
+        <div class="card-body">
+          <h5 class="card-title">Ingresos Hoy</h5>
+          <p class="fs-4" id="total-diario">$0</p>
+        </div>
+      </div>
+      <table class="table table-sm mt-3">
+        <thead>
+          <tr><th>Cliente</th><th>Servicio</th><th>Total</th></tr>
+        </thead>
+        <tbody id="tabla-diario"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Total Semanal -->
+  <div class="resumen-tab d-none" id="resumen-semanal">
+    <div class="col-md-12">
+      <div class="card text-white bg-primary shadow">
+        <div class="card-body">
+          <h5 class="card-title">Ingresos de la Semana</h5>
+          <p class="fs-4" id="total-semanal">$0</p>
+        </div>
+      </div>
+      <table class="table table-sm mt-3">
+        <thead>
+          <tr><th>Fecha</th><th>Servicio</th><th>Total</th></tr>
+        </thead>
+        <tbody id="tabla-semanal"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Por Trabajadora -->
+  <div class="resumen-tab d-none" id="resumen-trabajadoras">
+    <div class="col-md-12">
+      <div class="card text-white bg-warning shadow">
+        <div class="card-body">
+          <h5 class="card-title">Ventas por Trabajadora</h5>
+        </div>
+      </div>
+      <table class="table table-sm mt-3">
+        <thead>
+          <tr><th>Trabajadora</th><th>Total</th></tr>
+        </thead>
+        <tbody id="tabla-trabajadoras"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Por Servicio -->
+  <div class="resumen-tab d-none" id="resumen-servicios">
+    <div class="col-md-12">
+      <div class="card text-white bg-info shadow">
+        <div class="card-body">
+          <h5 class="card-title">Ventas por Servicio</h5>
+        </div>
+      </div>
+      <table class="table table-sm mt-3">
+        <thead>
+          <tr><th>Servicio</th><th>Total</th></tr>
+        </thead>
+        <tbody id="tabla-servicios"></tbody>
+      </table>
+
+      <div class="mt-4">
+        <canvas id="graficoServicios" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Contenedor para gráfico -->
+  <div class="mt-4">
+    <canvas id="grafico-ventas" height="100"></canvas>
+  </div>
+</section>
+
+    <!-- CUMPLEAÑOS PRÓXIMOS -->
+<section class="card p-4 mb-4 shadow-sm">
+  <h2 class="h5 mb-3">🎂 Cumpleaños Próximos</h2>
+
+  <ul class="list-group" id="lista-cumpleaños">
+    <!-- Ejemplo estático -->
+    <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+      Camila López (Trabajadora)
+      <span class="badge bg-pink rounded-pill">27 Jul</span>
+    </li> -->
+    <li class="list-group-item text-center text-muted">Cargando cumpleaños...</li>
+  </ul>
+</section>
+    <!-- CREAR DESCUENTO PERSONALIZADO -->
+<section class="card p-4 mb-4 shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h5">🎁 Crear Descuento</h2>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalDescuento">
+      + Crear descuento
+    </button>
+  </div>
+
+  <!-- Modal para crear descuento -->
+  <div class="modal fade" id="modalDescuento" tabindex="-1" aria-labelledby="modalDescuentoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="form-descuento" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDescuentoLabel">Nuevo Descuento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombre-descuento" class="form-label">Nombre del descuento</label>
+            <input type="text" class="form-control" id="nombre-descuento" required>
+          </div>
+          <div class="mb-3">
+            <label for="tipo-descuento" class="form-label">Tipo</label>
+            <select class="form-select" id="tipo-descuento" required>
+              <option value="porcentaje">Porcentaje (%)</option>
+              <option value="monto">Monto fijo ($)</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="valor-descuento" class="form-label">Valor</label>
+            <input type="number" class="form-control" id="valor-descuento" min="1" required>
+          </div>
+          <div class="mb-3">
+            <label for="fecha-expiracion" class="form-label">Fecha de expiración</label>
+            <input type="date" class="form-control" id="fecha-expiracion" required>
+          </div>
+          <div class="mb-3">
+          <label for="servicio-aplicable" class="form-label">Servicio al que aplica</label>
+          <input type="text" class="form-control" id="servicio-aplicable" placeholder="Ej: Manicure o 'todos'" required>
+          <small class="form-text text-muted">Escribe <b>todos</b> para aplicarlo a todos los servicios.</small>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar descuento</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+    <!-- RESUMEN DE COMISIONES -->
+<section class="card p-4 mb-4 shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h5">💰 Resumen de Comisiones</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="bg-light p-3 rounded mb-3">
+        <h6 class="mb-1">Comisión total para Jefa</h6>
+        <p class="fs-4 text-success" id="comision-jefa">$0</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="bg-light p-3 rounded mb-3">
+        <h6 class="mb-1">Total comisiones por trabajadora</h6>
+        <ul id="lista-comisiones-trabajadoras" class="list-group small">
+          <!-- Lista dinámica desde JS -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h6 class="mb-2">Gráfico de comisiones por trabajadora</h6>
+    <canvas id="grafico-comisiones" height="150"></canvas>
+  </div>
+</section>
+    <!-- ESTADÍSTICAS GLOBALES -->
+<section class="card p-4 mb-5 shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h5">📊 Estadísticas Globales</h2>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-3 mb-3">
+      <div class="bg-light p-3 rounded">
+        <h6>Reservas en el mes</h6>
+        <p class="fs-4 text-primary" id="estadisticas-reservas">0</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="bg-light p-3 rounded">
+        <h6>Servicios más vendidos</h6>
+        <ul id="servicios-populares" class="list-unstyled small text-muted mb-0">
+          <!-- JS: servicios top -->
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="bg-light p-3 rounded">
+        <h6>Clientas nuevas</h6>
+        <p class="fs-4 text-success" id="estadisticas-clientas-nuevas">0</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="bg-light p-3 rounded">
+        <h6>Ingresos globales</h6>
+        <p class="fs-4 text-dark" id="estadisticas-ingresos">$0</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h6 class="mb-2">Gráfico de reservas por día</h6>
+    <canvas id="grafico-reservas-mensuales" height="150"></canvas>
+  </div>
+</section>
+
+
+  </main>
+  <!-- Firebase CDN -->
+   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/Inicio/jefe.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+
+
+
+
+</body>
+</html>

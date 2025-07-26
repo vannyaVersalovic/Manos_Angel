@@ -1,0 +1,410 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #fffafa;
+  color: #222;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+}
+
+nav a {
+  margin-left: 18px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #c96583;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+.ubicacion p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.map {
+  width: 100%;
+  height: 250px;
+  border: none;
+  border-radius: 12px;
+}
+
+.servicios {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.servicios-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.servicio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100px;
+}
+
+.servicio img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+}
+
+.servicio p {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+.btn-reservar {
+  display: inline-block;
+  margin: 30px auto;
+  padding: 12px 24px;
+  background-color: #c96583;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.btn-reservar:hover {
+  background-color: #a84865;
+}
+
+.opiniones,
+.redes {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.iconos-redes {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* espacio entre iconos */
+}
+
+.icono-redes {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: invert(0); /* para ajustar color si quieres */
+  transition: filter 0.3s;
+}
+
+.icono-redes:hover {
+  filter: invert(0.5) brightness(1.2); /* efecto hover suave */
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #fdf1f5;
+  color: #999;
+  font-size: 14px;
+}
+
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre logo y texto */
+  font-weight: 600;
+  font-size: 1.2rem; /* tamaño de letra, ajusta si quieres */
+  color: #333;
+}
+
+.logo-img {
+  width: 2.5em;      /* tamaño igual a la altura de la letra */
+  height: 1.7em;
+  border-radius: 50%; /* círculo */
+  object-fit: cover;
+}
+
+/* Fondo semi-transparente */
+.modal-reserva {
+  display: none; /* oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Contenido blanco y centrado */
+.modal-contenido {
+  background-color: #fffafa;
+  padding: 25px 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 0 15px rgba(201, 101, 131, 0.6);
+}
+
+/* Botón cerrar */
+.btn-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #c96583;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.btn-cerrar:hover {
+  color: #a84865;
+}
+
+/* Foto trabajadora */
+.foto-trabajadora {
+  width: 100px;
+  height: 100px;
+  margin: 10px auto 20px auto;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid #c96583;
+}
+
+/* Formulario */
+#form-reserva label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #444;
+}
+
+#form-reserva select,
+#form-reserva input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.3s;
+}
+
+#form-reserva select:focus,
+#form-reserva input:focus {
+  border-color: #c96583;
+  outline: none;
+}
+
+#form-reserva button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px 0;
+  background-color: #c96583;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#form-reserva button:hover {
+  background-color: #a84865;
+}
+
+#mensaje-reserva {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Estilo base para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Estilo para encabezados */
+table thead tr {
+  background-color: #f5a623; /* color naranja suave */
+  color: white;
+  text-align: left;
+}
+
+table thead th {
+  padding: 12px 15px;
+  border-bottom: 2px solid #e67e22;
+}
+
+/* Estilo para filas */
+table tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+/* Alternar color en filas pares */
+table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Hover para fila */
+table tbody tr:hover {
+  background-color: #ffe5b4;
+}
+
+/* Celdas */
+table tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+/* Responsive: en pantallas pequeñas la tabla será scrollable */
+@media (max-width: 600px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+select#hora {
+  padding: 8px;
+  font-size: 15px;
+  background-color: #fff0f6;
+  border-radius: 5px;
+  border: 1px solid #ffc0e0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+select#hora:focus {
+  outline: none;
+  border-color: #ff94ca;
+  box-shadow: 0 0 4px #ffb6d9;
+}
+.estrellas span {
+  font-size: 30px;
+  cursor: pointer;
+  color: #ccc;
+  margin-right: 5px;
+  user-select: none;
+}
+.estrellas span.seleccionada {
+  color: gold;
+}
+#opinion-form {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+#opiniones-mostradas {
+  margin-top: 30px;
+}
+.opinion {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.opinion {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 8px rgba(201, 101, 131, 0.1);
+  margin-bottom: 20px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.opinion strong {
+  font-size: 16px;
+  color: #c96583;
+}
+
+.opinion p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 6px;
+}
+
+.opinion span {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 18px;
+}
+
+#opiniones-mostradas {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}
+.btn-cerrar-sesion {
+  background-color: #c96583;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-cerrar-sesion:hover {
+  background-color: #a84865;
+}

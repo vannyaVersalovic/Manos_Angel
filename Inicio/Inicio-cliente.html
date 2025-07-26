@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenido - Manos de Angel Spa</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="top-header">
+  <div class="logo">
+    <img src="/Imagenes/Logo.png" alt="Logo" class="logo-img" />
+    <span>Manos de Angel Spa</span>
+  </div>
+  <nav>
+    <button id="cerrar-sesion" class="btn-cerrar-sesion">Cerrar sesión</button>
+  </nav>
+</header>
+
+
+
+  <section class="bienvenida">
+    <h2>🌸 Bienvenida, <span id="nombre-usuario"></span></h2>
+  </section>
+  
+
+
+  <main>
+    <section class="ubicacion">
+      <h2>📍 Nuestra ubicación</h2>
+      <p>Yungay 745, Curicó, Chile</p>
+      <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3331.906433361188!2d-71.23863248481717!3d-34.98101218048525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x968f09a44b4a91f3%3A0x5cc06442f8478e5e!2sYungay%20745%2C%20Curic%C3%B3%2C%20Regi%C3%B3n%20del%20Maule%2C%20Chile!5e0!3m2!1ses!2scl!4v1688483739037!5m2!1ses!2scl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <section class="servicios">
+      <h2>✨ Servicios</h2>
+      <div class="servicios-grid">
+        <div class="servicio"><img src="/Imagenes/Manicurista.jpg" alt="Manicurista" /><p>Manicurista</p></div>
+        <div class="servicio"><img src="/Imagenes/Lashista.webp" alt="Lashistas" /><p>Lashistas</p></div>
+        <div class="servicio"><img src="/Imagenes/masajes.jpg" alt="Masajes" /><p>Masajes</p></div>
+        <div class="servicio"><img src="/Imagenes/Peluqueria.jpg" alt="Peluquería" /><p>Peluquería</p></div>
+        <div class="servicio"><img src="/Imagenes/Podologia.jpg" alt="Podología" /><p>Podología</p></div>
+      </div>
+      <a href="#" class="btn-reservar" id="btn-abrir-reserva">Reservar ahora</a>
+    </section>
+    <h2>📅 Mis Reservas</h2>
+    <div id="lista-reservas"></div>
+    <section class="opiniones">
+      <h2>📝 Opiniones de clientes</h2>
+      <div class="comentarios-container">
+        <div class="resumen-puntuacion">
+          <h3>Promedio</h3>
+          <div id="promedio-estrellas">⭐️⭐️⭐️⭐️⭐️</div>
+          <p id="cantidad-opiniones">(0 opiniones)</p>
+        </div>
+
+        <!-- Formulario -->
+        <div id="opinion-form">
+          <h3>Deja tu opinión</h3>
+          <div id="estrellas" class="estrellas">
+            <span data-valor="1">★</span>
+            <span data-valor="2">★</span>
+            <span data-valor="3">★</span>
+            <span data-valor="4">★</span>
+            <span data-valor="5">★</span>
+          </div>
+          <textarea id="comentario" rows="3" placeholder="¿Qué te pareció tu experiencia?"></textarea>
+          <button id="btn-enviar-opinion">Enviar opinión</button>
+          <p id="mensaje-opinion"></p>
+        </div>
+
+        <!-- Lista opiniones -->
+        <div id="opiniones-mostradas" class="tarjetas-opiniones"></div>
+      </div>
+    </section>
+
+    <section class="redes">
+      <h2>✨ Síguenos</h2>
+      <div class="iconos-redes">
+        <a href="https://facebook.com/tucuenta" target="_blank"><img src="/Imagenes/facebook.webp" class="icono-redes" /></a>
+        <a href="https://instagram.com/tucuenta" target="_blank"><img src="/Imagenes/Instagram.png" class="icono-redes" /></a>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal-reserva" class="modal-reserva">
+  <div class="modal-contenido">
+    <button id="btn-cerrar-reserva" class="btn-cerrar">&times;</button>
+    <h2>🗓️ Haz tu reserva</h2>
+    <form id="form-reserva">
+
+      <!-- SERVICIO -->
+      <label for="servicio">Servicio:</label>
+      <select id="servicio" required>
+        <option value="" disabled selected>Selecciona un servicio</option>
+        <option value="Manicurista">Manicurista</option>
+        <option value="Lashista">Lashista</option>
+        <option value="Masajes">Masajes</option>
+        <option value="Peluquería">Peluquería</option>
+        <option value="Podología">Podología</option>
+      </select>
+
+      <p id="precio-servicio" style="font-weight: bold; margin-top: 5px;">Precio: -</p>
+      <p id="duracion-servicio" style="font-size: 0.9em; color: gray;">Duración: -</p>
+
+      <!-- SUBSERVICIO -->
+      <label for="subservicio">Subcategoría:</label>
+      <select id="subservicio" required>
+        <option value="" disabled selected>Selecciona una opción</option>
+      </select>
+      <form id="form-descuento" class="modal-content">
+
+
+      <!-- TRABAJADORA -->
+      <label for="trabajadora">Trabajadora:</label>
+      <select id="trabajadora" required>
+        <option value="" disabled selected>Selecciona una trabajadora</option>
+        <option value="uidTrabajadora1" data-foto="/Imagenes/trabajadora1.jpg">María</option>
+        <option value="uidTrabajadora2" data-foto="/Imagenes/trabajadora2.jpg">Ana</option>
+        <option value="uidTrabajadora3" data-foto="/Imagenes/trabajadora3.jpg">Luisa</option>
+      </select>
+
+      <div id="foto-trabajadora" class="foto-trabajadora"></div>
+
+      <!-- PATOLOGÍA (solo para masajes) -->
+      <div id="grupo-patologia" style="display: none; margin-top: 10px;">
+        <label for="tiene-patologia">¿Tienes alguna patología?</label>
+        <select id="tiene-patologia">
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="no">No</option>
+          <option value="sí">Sí</option>
+        </select>
+
+        <div id="campo-patologia" style="display: none; margin-top: 5px;">
+          <label for="detalle-patologia">Describe tu patología:</label>
+          <textarea id="detalle-patologia" rows="2" placeholder="Ej: Hernia, hipertensión..."></textarea>
+        </div>
+      </div>
+
+      <!-- FECHA -->
+      <label for="fecha">Fecha:</label>
+      <input type="date" id="fecha" required />
+
+      <!-- HORA -->
+      <label for="hora">Hora:</label>
+      <select id="hora" required>
+        <option value="" disabled selected>Selecciona una hora</option>
+      </select>
+
+      <!-- MÉTODO DE PAGO -->
+      <label for="metodo_pago">Método de pago:</label>
+      <select id="metodo_pago" required>
+        <option value="" disabled selected>Selecciona método de pago</option>
+        <option value="efectivo">Efectivo</option>
+        <option value="transferencia">Transferencia</option>
+      </select>
+
+      <!-- BOTÓN -->
+      <button type="submit">Reservar</button>
+    </form>
+
+    <!-- MENSAJE FINAL -->
+    <div id="mensaje-reserva"></div>
+  </div>
+</div>
+
+
+  <footer class="footer">
+    <p>&copy; 2025 Manos de Angel Spa</p>
+  </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Inicializar Firebase si no está inicializado
+    if (!firebase.apps.length) {
+      const firebaseConfig = {
+        apiKey: "AIzaSyAWD49AKD5nftRxVnQZoqiPZWiUbYnev7M",
+        authDomain: "manos-de-angel-b0ce5.firebaseapp.com",
+        projectId: "manos-de-angel-b0ce5",
+        storageBucket: "manos-de-angel-b0ce5.firebasestorage.app",
+        messagingSenderId: "570701301886",
+        appId: "1:570701301886:web:f498b2768c612f77d0b02f",
+        measurementId: "G-0DNCN6475K"
+      };
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    // Botón cerrar sesión
+    document.addEventListener("DOMContentLoaded", () => {
+      const btnCerrar = document.getElementById("cerrar-sesion");
+      if (btnCerrar) {
+        btnCerrar.addEventListener("click", () => {
+          firebase.auth().signOut().then(() => {
+            window.location.href = "/inicio/inicio.html";
+          }).catch((error) => {
+            console.error("Error al cerrar sesión:", error);
+          });
+        });
+      }
+    });
+  </script>
+
+  <script src="/Registros/main.js"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    //(function(){
+      //emailjs.init({ publicKey: "NqHDglwGNlYw6CmAX" });
+    //})();
+  ///</script>
+
+  <script src="/inicio/inicio-cliente.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+/* Reset y base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #fffafa;
+  color: #222;
+}
+
+/* Header */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre logo y texto */
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.logo-img {
+  width: 2.5em;      
+  height: 1.7em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.logo-img {
+  width: 4em;
+  height: 3em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Navegación */
+nav a {
+  margin-left: 18px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #c96583;
+}
+
+/* Main */
+main {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #fffafa;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgb(200 101 131 / 0.2);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Títulos */
+h2 {
+  text-align: center;
+  color: #c96583;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+input {
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1.5px solid #eee;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #c96583;
+  outline: none;
+}
+
+/* Botón */
+button {
+  padding: 14px;
+  background-color: #c96583;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #a84865;
+}
+
+/* Link para registro */
+.link-register {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.link-register a {
+  color: #c96583;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.link-register a:hover {
+  color: #a84865;
+}
