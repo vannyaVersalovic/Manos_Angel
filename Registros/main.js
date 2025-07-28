@@ -52,7 +52,6 @@ if (document.getElementById('form-register')) {
 }
 
 
-// LOGIN con redirección por rol
 if (document.getElementById('form-login')) {
   const loginForm = document.getElementById('form-login');
 
@@ -63,29 +62,39 @@ if (document.getElementById('form-login')) {
     const password = loginForm['login-password'].value;
 
     try {
-    const userCredential = await auth.signInWithEmailAndPassword(email, password);
-    const user = userCredential.user;
+      const userCredential = await auth.signInWithEmailAndPassword(email, password);
+      const user = userCredential.user;
 
-    const doc = await db.collection('usuarios').doc(user.uid).get();
-    const data = doc.data();
+      const doc = await db.collection('usuarios').doc(user.uid).get();
 
-    // Redirección según correo o rol
-    if (email === "cautivepaladarsdb@gmail.com") {
-      window.location.href = '/inicio/jefe.html'; 
-    } else {
-      const rol = data?.rol || 'cliente';
-      if (rol === 'trabajadora' || rol === 'staff') {
-        window.location.href = '/staff/dashboard.html';
-      } else {
+      if (!doc.exists) {
+        alert("Usuario no encontrado en la base de datos.");
+        await auth.signOut();
+        return;
+      }
+
+      const data = doc.data();
+      const rol = (data.rol || 'cliente').toLowerCase();
+
+      if (email === "cautivepaladarsdb@gmail.com" || rol === 'jefa') {
+        window.location.href = '/inicio/jefe.html';
+      } else if (rol === 'trabajadora') {
+        window.location.href = '/Inicio/trabajadora.html';  // Aquí redirige a trabajadora
+      } else if (rol === 'cliente') {
         localStorage.setItem('usuarioNombre', data.nombre);
         window.location.href = '/Inicio/inicio-cliente.html';
+      } else {
+        alert("Rol no reconocido. Contacta al administrador.");
+        await auth.signOut();
       }
+
+    } catch (error) {
+      console.error('Error en login:', error.message);
+      alert('Error: ' + error.message);
     }
-  } catch (error) {
-    console.error('Error en login:', error.message);
-    alert('Error: ' + error.message);
-  }});
+  });
 }
+
 
 
 

@@ -27,7 +27,6 @@ if (window.location.pathname.includes("/inicio/inicio.html")) {
   const btnAbrir = document.getElementById('btn-abrir-reserva');
   const btnCerrar = document.getElementById('btn-cerrar-reserva');
   const modal = document.getElementById('modal-reserva');
-  const fotoDiv = document.getElementById('foto-trabajadora');
   const selectTrabajadora = document.getElementById('trabajadora');
   const fechaInput = document.getElementById('fecha');
   const horaSelect = document.getElementById('hora');
@@ -61,10 +60,17 @@ if (window.location.pathname.includes("/inicio/inicio.html")) {
       "Todo ceja": [45, 60]
     },
     "Masajes": {
-      "Relajación": [45, 60],
-      "Descontracturante": [50, 70],
-      "Drenaje linfático": [45, 60],
-      "Reductivo": [45, 60]
+    "Masaje relajante + reflexología - 30 minutos espalda y cuello": [45],
+    "Masaje relajante + reflexología - 30 minutos piernas": [45],
+    "Masaje relajante + reflexología - 60 minutos cuerpo completo": [70],
+    "Masaje con piezas calientes - 30 minutos espalda + cuello": [45],
+    "Masaje con piezas calientes - 45 minutos piernas + espalda + cuello": [55],
+    "Masaje con piezas calientes - 60 minutos cuerpo completo": [70],
+    "Masaje mixto relajante + reflexología - 20 minutos express": [30],
+    "Masaje mixto relajante + reflexología - 30 minutos espalda, cuello, piernas": [45],
+    "Masaje mixto relajante + reflexología - 45 minutos cuerpo completo": [55]
+
+
     },
     "Peluquería": {
       "Alisado permanente": [120, 180],
@@ -94,10 +100,18 @@ if (window.location.pathname.includes("/inicio/inicio.html")) {
       "Todo ceja": 15000
     },
     "Masajes": {
-      "Relajación": 25000,
-      "Descontracturante": 27000,
-      "Drenaje linfático": 30000,
-      "Reductivo": 28000
+      "Masaje relajante + reflexología - 20 minutos zona especifica": 20000,
+      "Masaje relajante + reflexología - 30 minutos espalda y cuello": 25000,
+      "Masaje relajante + reflexología - 30 minutos piernas": 22000,
+      "Masaje relajante + reflexología - 60 minutos cuerpo completo": 35000,
+
+      "Masaje con piezas calientes - 30 minutos espalda + cuello": 30000,
+      "Masaje con piezas calientes - 45 minutos piernas + espalda + cuello": 35000,
+      "Masaje con piezas calientes - 60 minutos cuerpo completo": 40000,
+
+      "Masaje mixto relajante + reflexología - 20 minutos express": 18000,
+      "Masaje mixto relajante + reflexología - 30 minutos espalda, cuello, piernas": 25000,
+      "Masaje mixto relajante + reflexología - 45 minutos cuerpo completo": 35000
     },
     "Peluquería": {
       "Alisado permanente": 25000,
@@ -131,7 +145,7 @@ if (window.location.pathname.includes("/inicio/inicio.html")) {
     const todasLasHoras = [
       "09:00", "10:00", "11:00", "12:00",
       "13:00", "14:00", "15:00", "16:00",
-      "17:00", "18:00", "19:00"
+      "17:00", "18:00", "19:00", "20:00"
     ];
 
     try {
@@ -155,25 +169,86 @@ if (window.location.pathname.includes("/inicio/inicio.html")) {
       console.error("Error al cargar horas disponibles:", error);
     }
   }
+  function tieneSubservicio(servicios, servicio, subservicio) {
+  if (!servicios || !servicios[servicio]) return false;
 
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      try {
-        const doc = await db.collection("usuarios").doc(user.uid).get();
-        nombreUsuario = doc.exists ? (doc.data().nombre || nombreUsuario) : nombreUsuario;
-        if (span) span.textContent = nombreUsuario;
-      } catch (e) {
-        console.error("Error al obtener el nombre del usuario:", e);
-        if (span) span.textContent = nombreUsuario;
+  const valor = servicios[servicio];
+
+  if (Array.isArray(valor)) {
+    return valor.some(item => item.includes(subservicio) || subservicio.includes(item));
+  }
+
+  if (typeof valor === 'object') {
+    for (const key in valor) {
+      const arr = valor[key];
+      if (Array.isArray(arr)) {
+        if (arr.some(item => item.includes(subservicio) || subservicio.includes(item))) {
+          return true;
+        }
       }
-      cargarHistorialReservas();
-    } else {
-      if (span) span.textContent = "Invitado 🌼";
-      document.getElementById('lista-reservas').innerHTML = "<p>Por favor inicia sesión para ver tus reservas.</p>";
     }
-  });
+  }
 
-  if (selectServicio && selectSubservicio) {
+  return false;
+}
+
+
+  
+// FUNCIÓN para cargar trabajadoras según el servicio y subservicio
+async function cargarTrabajadorasDisponibles(servicio, subservicio) {
+  try {
+    const snapshot = await db.collection("trabajadoras").get();
+    const opciones = [];
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const uid = doc.id;
+      console.log("Trabajadora:", data.nombre, "Servicios:", data.servicios);
+
+      if (tieneSubservicio(data.servicios, servicio, subservicio)) {
+  opciones.push({ id: uid, nombre: data.nombre });
+          }
+        });
+
+    const selectTrabajadora = document.getElementById("trabajadora");
+    selectTrabajadora.innerHTML = '<option value="" disabled selected>Selecciona una trabajadora</option>';
+
+    if (opciones.length === 0) {
+      selectTrabajadora.innerHTML += `<option disabled>No hay trabajadoras disponibles</option>`;
+    } else {
+      opciones.forEach(t => {
+        const option = document.createElement('option');
+        option.value = t.id;
+        option.textContent = t.nombre;
+        selectTrabajadora.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error("❌ Error al cargar trabajadoras:", error);
+  }
+}
+
+
+// DETECTOR DE CAMBIO EN AUTENTICACIÓN
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    try {
+      const doc = await db.collection("usuarios").doc(user.uid).get();
+      nombreUsuario = doc.exists ? (doc.data().nombre || nombreUsuario) : nombreUsuario;
+      if (span) span.textContent = nombreUsuario;
+    } catch (e) {
+      console.error("Error al obtener el nombre del usuario:", e);
+      if (span) span.textContent = nombreUsuario;
+    }
+    cargarHistorialReservas();
+  } else {
+    if (span) span.textContent = "Invitado 🌼";
+    document.getElementById('lista-reservas').innerHTML = "<p>Por favor inicia sesión para ver tus reservas.</p>";
+  }
+});
+
+// DETECTOR DE CAMBIO EN SERVICIO Y SUBSERVICIO
+if (selectServicio && selectSubservicio) {
   const grupoPatologia = document.getElementById("grupo-patologia");
   const tienePatologia = document.getElementById("tiene-patologia");
   const campoPatologia = document.getElementById("detalle-patologia");
@@ -193,6 +268,33 @@ if (window.location.pathname.includes("/inicio/inicio.html")) {
     });
     selectSubservicio.disabled = opciones.length === 0;
     actualizarPrecio();
+
+    // Mostrar campo patología solo si se elige 'Masajes'
+    if (servicio === "Masajes") {
+      grupoPatologia.style.display = "block";
+    } else {
+      grupoPatologia.style.display = "none";
+      tienePatologia.value = "";
+      campoDetallePatologia.style.display = "none";
+      campoPatologia.value = "";
+    }
+
+    // Llamar a cargar trabajadoras con el primer subservicio
+    if (opciones.length > 0) {
+      cargarTrabajadorasDisponibles(servicio, opciones[0]);
+    }
+  });
+
+// Y esto aparte (una vez), no adentro del anterior
+selectSubservicio.addEventListener("change", () => {
+  const servicio = selectServicio.value;
+  const subservicio = selectSubservicio.value;
+  if (servicio && subservicio) {
+    cargarTrabajadorasDisponibles(servicio, subservicio);
+    actualizarPrecio();
+  }
+
+
 
     // Mostrar campo patología solo si se elige 'Masajes'
     if (servicio === "Masajes") {
@@ -233,8 +335,6 @@ if (btnCerrar) btnCerrar.addEventListener('click', () => {
 
 if (selectTrabajadora) {
   selectTrabajadora.addEventListener('change', () => {
-    const fotoUrl = selectTrabajadora.selectedOptions[0].getAttribute('data-foto');
-    fotoDiv.style.backgroundImage = fotoUrl ? `url(${fotoUrl})` : '';
     const fecha = fechaInput.value;
     if (fecha) cargarHorasDisponibles(selectTrabajadora.value, fecha);
   });
@@ -298,10 +398,14 @@ if (formReserva) {
       };
 
       await db.collection("reservas").add(reserva);
+      
 
       mensajeReserva.innerText = "✅ Reserva realizada con éxito.";
+      console.log("Intentando guardar reserva:", reserva);
+      
 
-      emailjs.send("service_hwltdfj", "template_b3rrnos", {
+
+      /*emailjs.send("service_hwltdfj", "template_b3rrnos", {
         nombre: nombreUsuario,
         email: user.email,
         servicio,
@@ -309,11 +413,11 @@ if (formReserva) {
         fecha,
         hora,
         nombreTrabajadora
-      });
+      });*/
 
       // Limpiar formulario
       formReserva.reset();
-      fotoDiv.style.backgroundImage = "";
+     
       selectSubservicio.innerHTML = '<option value="" disabled selected>Selecciona una opción</option>';
       precioTexto.textContent = "Precio: -";
       duracionTexto.textContent = "Duración: -";
@@ -325,8 +429,7 @@ if (formReserva) {
         modal.style.display = "none";
         mensajeReserva.innerText = "";
         cargarHistorialReservas();
-        const listaDiv = document.getElementById('lista-reservas');
-        if (!user || !listaDiv) return;
+        
 
       }, 2000);
 
@@ -541,6 +644,8 @@ if (window.location.pathname.includes("/inicio/inicio.html")) {
 }
 
 });
+
+
 
 
 
